@@ -40,8 +40,6 @@ Promise.all([
   const childArray = treemap.descendants().filter((d) => d.depth === 2);
   const parentArray = treemap.descendants().filter((d) => d.depth === 1);
 
-  console.log(parentArray);
-
   const matchParent = (category) =>
     parentArray.findIndex((x) => x.data.name === category);
 
