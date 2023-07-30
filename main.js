@@ -3,12 +3,27 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 const gameURL =
   "https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json";
 
+const movieURL =
+  "https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/movie-data.json";
+
+const kickURL =
+  "https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/kickstarter-funding-data.json";
+
+const url =
+  dataset === "game"
+    ? gameURL
+    : dataset === "movie"
+    ? movieURL
+    : dataset === "kickstarter"
+    ? kickURL
+    : "";
+
 const fetchData = async (url) => {
   const response = await fetch(url);
   return await response.json();
 };
 
-fetchData(gameURL).then((gameData) => {
+fetchData(url).then((data) => {
   const tooltip = d3
     .select("#container")
     .append("div")
@@ -23,7 +38,7 @@ fetchData(gameURL).then((gameData) => {
 
   const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  const hierarchy = d3.hierarchy(gameData).sum((d) => d.value);
+  const hierarchy = d3.hierarchy(data).sum((d) => d.value);
 
   hierarchy.children.sort(
     (a, b) => b.data.children.length - a.data.children.length
